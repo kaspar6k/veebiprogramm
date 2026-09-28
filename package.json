@@ -1,0 +1,31 @@
+{
+  "name": "veebiprogramm",
+  "version": "1.0.0",
+  "description": "Veebiprogrammeerimise tundides tehtud veeb",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://kaspar6k@github.com/kaspar6k/veebiprogramm.git"
+  },
+  "keywords": [
+    "node.js",
+    "veeb",
+    "Tallinna",
+    "Ülikool",
+    "üliõpilane",
+    "koolitöö",
+    "projekt"
+  ],
+  "author": "Kaspar Kuusk",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kaspar6k/veebiprogramm/issues"
+  },
+  "homepage": "https://github.com/kaspar6k/veebiprogramm#readme",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
