@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="et"> 	
+<head>
+	<meta charset="utf-8">
+	<title>Eesti film</title>
+</head>
+<body>
+	<h1>Eesti filmi inimesed</h1>
+	<hr>
+	<p>Siin lehel on näha Eesti filmi inimestega seonduvat</p>
+	<hr>
+	<ul>
+		<li><a href="/">Avalehele</a></li>
+		<li><a href="/eestifilmid">Eesti filmi avaleht</a></li>
+	</ul>
+	<hr>
+	<ol>
+		<% personList.forEach(function(person){%>
+		<li><%= person.first_name %> <%= person.last_name %>, sündinud <%=person.born %></li>
+		<% }); %>
+	</ol>
+</body>
+</html>

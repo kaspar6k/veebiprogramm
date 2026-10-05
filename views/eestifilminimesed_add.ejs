@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="et"> 	
+<head>
+	<meta charset="utf-8">
+	<title>Eesti film</title>
+</head>
+<body>
+	<h1>Eesti filmiinimeste lisamine</h1>
+	<hr>
+	<p>Lisa inimesi filmide andmebaasi</p>
+	<hr>
+	<ul>
+		<li><a href="/">Avalehele</a></li>
+		<li><a href="/eestifilmid">Eesti filmi avaleht</a></li>
+	</ul>
+	<hr>
+	<form method="POST">
+		<label for="firstNameInput">Filmiinimese eesnimi </label>
+		<input id="firstNameInput" name="firstNameInput" type="text" placeholder="Eesnimi ..." required>
+		<br>
+		<label for="lastNameInput">Filmiinimese perenimi</label>
+		<input id="lastNameInput" name="lastNameInput" type="text" placeholder="Perekonnanimi ..." required>
+		<br>
+		<label for="borninput">Filmiinimese sünnikuupäev</label>
+		<input id="deceasedInput" name="deceasedInput" type="date" required>
+		<label for="borninput">Filmiinimese surmakuupäev</label>
+		<input id="deceasedInput" name="deceasedInput" type="date" >
+		<br>
+		<input id="personSubmit" name="personSubmittype" type="submit" value="Salvesta"> 
+	</form>
+	<p><%= notice %>
+</body>
+</html>

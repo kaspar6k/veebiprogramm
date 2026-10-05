@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+	<meta charset="utf-8">
+	<title>Viimane külastus</title>
+</head>
+<body>
+	<h1>Viimane külastus</h1>
+	<ul>
+		<li><a href="/">Avalehele</a></li>
+	</ul>
+	<hr>
+	<% if (name) { %>
+		<p>Viimati registreeriti külastus <%= date %>, kell <%= time %> kui seda tegi <%= name %>.</p>
+	<% } else { %>
+		<p>Külastusi pole veel registreeritud.</p>
+	<% } %>
+</body>
+</html>
