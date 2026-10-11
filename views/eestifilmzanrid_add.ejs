@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+	<meta charset="utf-8">
+	<title>Eesti film</title>
+</head>
+<body>
+	<h1>Žanrite lisamine</h1>
+	<hr>
+	<ul>
+		<li><a href="/">Avalehele</a></li>
+		<li><a href="/eestifilmid">Eesti filmi avaleht</a></li>
+	</ul>
+	<hr>
+	<form method="POST">
+		<label for="genreNameInput">Žanri nimi</label>
+		<input id="genreNameInput" name="genreNameInput" type="text" placeholder="Žanr ..." value="<%= genreName %>" required>
+		<br>
+		<label for="descriptionInput">Kirjeldus</label>
+		<input id="descriptionInput" name="descriptionInput" type="text" placeholder="Kirjeldus ..." value="<%= description %>">
+		<br>
+		<input id="genreSubmit" name="genreSubmit" type="submit" value="Salvesta">
+	</form>
+	<p><%= notice %>
+</body>
+</html>
