@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+	<meta charset="utf-8">
+	<title>Eesti film</title>
+</head>
+<body>
+	<h1>žanrid</h1>
+	<hr>
+	<ul>
+		<li><a href="/">Avalehele</a></li>
+		<li><a href="/eestifilmid">Eesti filmi avaleht</a></li>
+	</ul>
+	<hr>
+	<h2>Žanrid</h2>
+	<% if(genreList.length > 0){ %>
+	<ul>
+	<% genreList.forEach(genre => { %>
+		<li><strong><%= genre.name %></strong><% if(genre.description){ %> – <%= genre.description %><% } %></li>
+	<% }); %>
+	</ul>
+	<% } else { %>
+	<p>Žanre ei leitud.</p>
+	<% } %>
+</body>
+</html>
