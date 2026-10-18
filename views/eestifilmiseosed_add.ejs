@@ -1,1 +1,48 @@
-x
+<!DOCTYPE html>
+<html lang="et">
+<head>
+	<meta charset="utf-8">
+	<title>Eesti film</title>
+</head>
+<body>
+	<h1>Filmi seoste lisamine</h1>
+	<hr>
+	<ul>
+		<li><a href="/">Avalehele</a></li>
+		<li><a href="/eestifilmid">Eesti filmi avaleht</a></li>
+		<li><a href="/eestifilm/seosed">Filmide seosed</a></li>
+	</ul>
+	<hr>
+	<form method="POST">
+		<label for="personInput">Isik</label>
+		<select id="personInput" name="personInput" required>
+			<option value="" disabled <%= !selPerson ? 'selected' : '' %>>Vali isik ...</option>
+			<% personList.forEach(person => { %>
+				<option value="<%= person.id %>" <%= selPerson == person.id ? 'selected' : '' %>><%= person.first_name %> <%= person.last_name %></option>
+			<% }); %>
+		</select>
+		<br>
+		<label for="movieInput">Film</label>
+		<select id="movieInput" name="movieInput" required>
+			<option value="" disabled <%= !selMovie ? 'selected' : '' %>>Vali film ...</option>
+			<% movieList.forEach(movie => { %>
+				<option value="<%= movie.id %>" <%= selMovie == movie.id ? 'selected' : '' %>><%= movie.title %> (<%= movie.release_year %>)</option>
+			<% }); %>
+		</select>
+		<br>
+		<label for="positionInput">Amet</label>
+		<select id="positionInput" name="positionInput" required>
+			<option value="" disabled <%= !selPosition ? 'selected' : '' %>>Vali amet ...</option>
+			<% positionList.forEach(pos => { %>
+				<option value="<%= pos.id %>" <%= selPosition == pos.id ? 'selected' : '' %>><%= pos.title %></option>
+			<% }); %>
+		</select>
+		<br>
+		<label for="roleInput">Tegelaskuju (ainult näitleja puhul)</label>
+		<input id="roleInput" name="roleInput" type="text" placeholder="Tegelaskuju nimi ..." maxlength="100" value="<%= role %>">
+		<br>
+		<input id="relationSubmit" name="relationSubmit" type="submit" value="Salvesta">
+	</form>
+	<p><%= notice %></p>
+</body>
+</html>

@@ -211,7 +211,114 @@ const zanridAddPost = async (req, res)=>{
 };
 
 
+const seosed = async (req, res)=>{
+	let conn;
+	try {
+		conn = await mysql.createConnection({
+			host: process.env.DB_HOST,
+			user: process.env.DB_USER,
+			password: process.env.DB_PASS,
+			database: process.env.DB_NAME,
+		});
+		const sqlReq = 'SELECT person.first_name, person.last_name, movie.title AS movie_title, movie.release_year, profession.title AS profession_title, person_in_movie.character_name FROM person_in_movie INNER JOIN person ON person_in_movie.person_id = person.id INNER JOIN movie ON person_in_movie.movie_id = movie.id INNER JOIN profession ON person_in_movie.profession_id = profession.id ORDER BY movie.title, profession.title, person.last_name';
+		const [sqlRes] = await conn.execute(sqlReq);
+		res.render('eestifilmiseosed', {relationList: sqlRes});
+	}
+	catch(err){
+		console.log('viga andmebaasist lugemisel: ' + err);
+		res.render('eestifilmiseosed', {relationList: []});
+	}
+	finally {
+		if(conn){
+			await conn.end();
+		}
+	}
+};
 
+
+const seosedValikud = async (conn)=>{
+	const [personList] = await conn.execute('SELECT id, first_name, last_name FROM person ORDER BY last_name, first_name');
+	const [movieList] = await conn.execute('SELECT id, title, release_year FROM movie ORDER BY title');
+	const [positionList] = await conn.execute('SELECT id, title FROM profession ORDER BY title');
+	return {personList: personList, movieList: movieList, positionList: positionList};
+};
+
+const seosedAdd = async (req, res)=>{
+	let conn;
+	let lists = {personList: [], movieList: [], positionList: []};
+	try {
+		conn = await mysql.createConnection({
+			host: process.env.DB_HOST,
+			user: process.env.DB_USER,
+			password: process.env.DB_PASS,
+			database: process.env.DB_NAME,
+		});
+		lists = await seosedValikud(conn);
+		res.render('eestifilmiseosed_add', {...lists, notice: 'ootan sisestust', selPerson: null, selMovie: null, selPosition: null, role: null});
+	}
+	catch(err){
+		console.log('viga andmebaasist lugemisel: ' + err);
+		res.render('eestifilmiseosed_add', {...lists, notice: 'andmebaasi suhtlus nurjus', selPerson: null, selMovie: null, selPosition: null, role: null});
+	}
+	finally {
+		if(conn){
+			await conn.end();
+		}
+	}
+};
+
+const seosedAddPost = async (req, res)=>{
+	const personId = Number(req.body.personInput);
+	const movieId = Number(req.body.movieInput);
+	const positionId = Number(req.body.positionInput);
+	const form = {selPerson: req.body.personInput, selMovie: req.body.movieInput, selPosition: req.body.positionInput, role: req.body.roleInput};
+	let conn;
+	let lists = {personList: [], movieList: [], positionList: []};
+	try {
+		conn = await mysql.createConnection({
+			host: process.env.DB_HOST,
+			user: process.env.DB_USER,
+			password: process.env.DB_PASS,
+			database: process.env.DB_NAME,
+		});
+		lists = await seosedValikud(conn);
+
+		
+		if(!Number.isInteger(personId) || personId <= 0 || !Number.isInteger(movieId) || movieId <= 0 || !Number.isInteger(positionId) || positionId <= 0){
+			return res.render('eestifilmiseosed_add', {...lists, ...form, notice: 'vali isik, film ja amet'});
+		}
+
+		const [positionRes] = await conn.execute('SELECT title FROM profession WHERE id = ?', [positionId]);
+		if(positionRes.length === 0){
+			return res.render('eestifilmiseosed_add', {...lists, ...form, notice: 'ametit ei leitud'});
+		}
+		let role = null;
+		if(positionRes[0].title.toLowerCase() === 'näitleja'){
+			role = (req.body.roleInput || '').trim();
+			if(role === ''){
+				return res.render('eestifilmiseosed_add', {...lists, ...form, notice: 'tegelaskuju nimi puudub'});
+			}
+		}
+
+		
+		const [existing] = await conn.execute('SELECT id FROM person_in_movie WHERE person_id = ? AND movie_id = ? AND profession_id = ? AND character_name <=> ?', [personId, movieId, positionId, role]);
+		if(existing.length > 0){
+			return res.render('eestifilmiseosed_add', {...lists, ...form, notice: 'selline seos on juba olemas'});
+		}
+
+		await conn.execute('INSERT INTO person_in_movie (person_id, movie_id, profession_id, character_name) VALUES (?,?,?,?)', [personId, movieId, positionId, role]);
+		res.render('eestifilmiseosed_add', {...lists, notice: 'andmed salvestati', selPerson: null, selMovie: null, selPosition: null, role: null});
+	}
+	catch (err){
+		console.log('viga andmebaasiga suhtlemisel: ' + err);
+		res.render('eestifilmiseosed_add', {...lists, ...form, notice: 'andmebaasi suhtlus nurjus'});
+	}
+	finally {
+		if(conn){
+			await conn.end();
+		}
+	}
+};
 
 
 module.exports = {
@@ -224,5 +331,9 @@ module.exports = {
 	filmidAddPost,
 	zanrid,
 	zanridAdd,
-	zanridAddPost
+	zanridAddPost,
+	seosed,
+	seosedAdd,
+	seosedAddPost,
+	
 };

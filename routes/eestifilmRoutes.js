@@ -9,9 +9,14 @@ const{
 	filmid,
 	filmidAdd,
 	filmidAddPost,
-	zanrid,
+	zanrid, 
 	zanridAdd,
-	zanridAddPost} = require('../controllers/eestifilmControllers');
+	zanridAddPost,
+	seosed,
+	seosedAdd,
+	seosedAddPost,
+	
+	} = require('../controllers/eestifilmControllers');
 
 router.route('/').get(eestifilm);
 router.route('/inimesed').get(inimesed);
@@ -23,5 +28,9 @@ router.route('/filmid_add').post(filmidAddPost);
 router.route('/zanrid').get(zanrid);
 router.route('/zanrid_add').get(zanridAdd);
 router.route('/zanrid_add').post(zanridAddPost);
+router.route('/seosed').get(seosed); 
+router.route('/seosed_add').get(seosedAdd);
+router.route('/seosed_add').post(seosedAddPost);
+
 
 module.exports = router; 

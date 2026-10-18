@@ -1,1 +1,25 @@
-x
+<!DOCTYPE html>
+<html lang="et">
+<head>
+	<meta charset="utf-8">
+	<title>Eesti film</title>
+</head> 
+<body>
+	<h1>Filmide seosed</h1>
+	<hr>
+	<ul>
+		<li><a href="/">Avalehele</a></li>
+		<li><a href="/eestifilmid">Eesti filmi avaleht</a></li>
+	</ul>
+	<hr>
+	<% if(relationList.length > 0){ %>
+	<ol>
+		<% relationList.forEach(rel => { %>
+			<li><strong><%= rel.first_name %> <%= rel.last_name %></strong> – <%= rel.profession_title %><% if(rel.character_name){ %> (tegelaskuju: <%= rel.character_name %>)<% } %> filmis "<%= rel.movie_title %>" (<%= rel.release_year %>)</li>
+		<% }); %>
+	</ol>
+	<% } else { %>
+	<p>Seoseid ei leitud.</p>
+	<% } %>
+</body>
+</html>
