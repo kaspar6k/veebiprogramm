@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="et"> 	
+<head>
+	<meta charset="utf-8">
+	<title> </title>
+</head>
+<body>
+	<h1>galeriisse fotode laadimine </h1>
+	<hr>
+	<p>siin saate lisada fotosi galeriisse </p>
+	<hr>
+	<ul>
+		<li><a href="/">Avalehele</a></li>
+	</ul>
+	<hr>
+	<form method="POST" enctype="multipart/form-data">
+		<label for="photoInput">Vali soovitud pildifail (.jpg)</label>
+		<input id="photoInput" name="photoInput" type="file">
+		<br>
+		<label for="altInput">Foto alternatiivtekst<label>
+		<input id="altInput" name="altInput" type="text" placeholder="Pildil on ...">
+		<br>
+		<input id="privacyInput1" name="privacyinput" type="radio" value="1" checked>
+		<label for="privacyInput1">Privaatne</label>
+		<br>
+		<input id="privacyInput2" name="privacyinput" type="radio" value="2">
+		<label for="privacyInput2">Sisseloginud kasutajatele</label>
+		<br>
+		<input id="privacyInput3" name="privacyinput" type="radio" value="3">
+		<label for="privacyInput3">Avalik</label>
+		<br>
+		<input id="photoSubmit" name="photoSubmit" type="submit" value="lae üles"> 
+	</form>
+	<p>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+	<meta charset="utf-8">
+	<title>Fotogalerii</title>
+</head>
+<body>
+	<h1>Fotogalerii</h1>
+	<hr>
+	<ul>
+		<li><a href="/">Avalehele</a></li>
+		<li><a href="/galleryPhotoUpload">Piltide üleslaadimine</a></li>
+	</ul>
+	<hr>
+	<% if (photoList.length > 0) { %>
+		<% photoList.forEach(photo => { %>
+			<img src="/gallery/normal/<%= photo.filename %>" alt="<%= photo.alttext || 'Galeriipilt' %>">
+			</a>
+		<% }); %>
+	<% } else { %>
+		<p>Galeriis pole veel fotosid.</p>
+	<% } %>
+</body>
+</html>

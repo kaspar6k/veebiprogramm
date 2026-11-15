@@ -14,10 +14,19 @@
 	<p><%= dateNow %></p>
 	<p>Kell on: <%= timeNow %></p>
 	<ul>
+		<li><a href="/signup">Kasutajakonto loomine</a></li>
+		<li><a href="/signin">Logi sisse</a></li>
 		<li><a href="/vanasona">Tänane vanasõna</a></li>
 		<li><a href="/oppimine">Miks astusin TLÜ?</a></li>
 		<li><a href="/kulastus">Viimane külastus</a></li>
 		<li><a href="/eestifilmid">Eesti filmid</a></li>
-	</ul><img src="pic/tallinn-laevalt.jpg" alt="Vaade Tallinnale laevast" style="max-width: 30%; height: auto;"><br>2026 august, Tallinn
+		<li><a href="/galleryPhotoUpload">Piltide üleslaadimine</a></li>
+		<li><a href="/galleryPhoto">Fotogalerii</a></li>
+	</ul>
+	<% if (photo.filename) { %>
+		<h2>Uusim avalik foto</h2>
+		<img src="/gallery/normal/<%= photo.filename %>" alt="<%= photo.alttext %>" style="max-width: 30%; height: auto;">
+	<% } %>
+	<!-- </ul><img src="pic/tallinn-laevalt.jpg" alt="Vaade Tallinnale laevast" style="max-width: 30%; height: auto;"><br>2026 august, Tallinn -->
 </body>
 </html>

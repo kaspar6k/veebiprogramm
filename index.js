@@ -22,15 +22,41 @@ app.set('view engine', 'ejs');
 
 //määran ühe päris kataloogi virtuaalses serveris kättesaadavaks
 app.use(express.static('public'))
-app.use(bodyparser.urlencoded({extended: false}));
+app.use(bodyparser.urlencoded({extended: true}));//kui vormised ainult tekst siis "false"
 
-//marsruudid
-app.get('/', (req, res)=>{
+//marsruudid 
+app.get('/', async (req, res)=>{
 	//res.send('Express.js läks käima ja serveerib meile veebi.');
 	const dayNow = dateET.weekDay ();
 	const dateNow = dateET.fullDate(0);
-const timeNow = dateET.fullTime();
-	res.render('index', {dayNow: dayNow, dateNow: dateNow, timeNow: timeNow});
+	const timeNow = dateET.fullTime();
+	let photo = {filename: null, alttext: 'Uusim avalik foto'};
+	let conn;
+	try {
+		conn = await mysql.createConnection({
+			host: process.env.DB_HOST,
+			user: process.env.DB_USER,
+			password: process.env.DB_PASS,
+			database: process.env.DB_NAME,
+		});
+		const sqlReq = 'SELECT filename, alttext FROM galleryphotos WHERE id=(SELECT MAX(id) FROM galleryphotos WHERE privacy=? AND deleted IS NULL)';
+		const [rows] = await conn.execute(sqlReq, [3]);
+		if(rows.length > 0){
+			photo.filename = rows[0].filename;
+			if(rows[0].alttext){
+				photo.alttext = rows[0].alttext;
+			}
+		}
+	}
+	catch(err){
+		console.log('viga uusima foto lugemisel: ' + err);
+	}
+	finally {
+		if(conn){
+			await conn.end();
+		}
+	}
+	res.render('index', {dayNow: dayNow, dateNow: dateNow, timeNow: timeNow, photo: photo});
 });
 
 app.get('/vanasona', async (req, res)=>{
@@ -53,11 +79,34 @@ app.get('/eestifilmid', (req, res)=>{
 	res.render('eestifilmid');
 });
 
+//sisseloginud kasutajate avaleht
+app.get('/home', (req, res)=>{
+	res.render('home');
+});
+
+//väljalogimine
+app.get('/logout', (req, res)=>{
+	res.redirect('/');
+});
+
 const eestifilmRouter = require('./routes/eestifilmRoutes');
 app.use('/eestifilm', eestifilmRouter);
 
 const kulastusRouter = require('./routes/kulastusRoutes');
 app.use('/kulastus', kulastusRouter);
 
+const galleryPhotoUploadRouter = require('./routes/galleryPhotoUploadRoutes');
+app.use('/galleryPhotoUpload', galleryPhotoUploadRouter );
+ 
+const galleryPhotoRouter = require('./routes/galleryPhotoRoutes');
+app.use('/galleryPhoto', galleryPhotoRouter);
+
+//kasutajakonto loomise marsruut
+const signupRouter = require('./routes/signupRoutes');
+app.use('/signup', signupRouter);
+
+//Sisselogimise marsruut
+const signinRouter = require('./routes/signinRoutes');
+app.use('/signin', signinRouter);
 
 app.listen(5106);
