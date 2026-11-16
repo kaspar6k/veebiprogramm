@@ -9,9 +9,11 @@ const photoGallery = async (req, res)=>{
 			password: process.env.DB_PASS,
 			database: process.env.DB_NAME,
 		});
-		const sqlReq = 'SELECT filename, alttext FROM galleryphotos WHERE privacy >= ? AND deleted IS NULL ORDER BY id DESC';
+		const sqlReq = 'SELECT id, filename, alttext FROM galleryphotos WHERE privacy >= ? AND deleted IS NULL ORDER BY id DESC';
 		const [sqlRes] = await conn.execute(sqlReq, [2]);
 		res.render('galleryPhoto', {photoList: sqlRes});
+		//see õpetaja asi!!!!!!!!
+	photoList.push({src: photos[i].filename, alt: altText, id: photos[i].id00});
 	}
 	catch(err){
 		console.log('viga galerii lugemisel: ' + err);

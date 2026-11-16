@@ -8,14 +8,41 @@ const bodyparser = require('body-parser');
 //moodul andmebaasiga suhtlemiseks, promises osaga async
 const mysql = require('mysql2/promise');
 
+const session = require('express-session');
 //moodul .env faili lugemiseks (parool), keskkonnamuutujate parsimiseks
+const MySQLStore = require('express-mysql-session')(session);
+
 require('dotenv').config();
 
+const checkLogin = require('./src/checkLogin');
 const dateET = require('./src/dateTimeET');
 const textRef ='public/txt/vanasonad.txt';
 const regTextRef ='public/txt/visits.txt';
 //käivitan express.js funktsiooni ja annan nimeks "app"
 const app = express();
+
+
+//võtan kasutusele sessioni
+/* app.use(session({
+	secret: process.env.SES_SECRET,
+	saveUninitialized: false,
+	resave: false
+})); */
+const sessionStore = new MySQLStore ({
+	host: process.env.DB_HOST,
+	user: process.env.DB_USER,
+	password: process.env.DB_PASS,
+	database: process.env.DB_NAME,
+});
+app.use(session({
+	secret: process.env.SES_SECRET,
+	store: sessionStore,
+	saveUninitialized: false,
+	resave: false,
+	cookie: {
+		maxAge: 1000 * 60 * 60 * 4 //tunniga aeguvad sessioni küpsised
+	}
+}));
 
 //määrame veebilehtedele mallide renderdamise mootori
 app.set('view engine', 'ejs');
@@ -80,7 +107,7 @@ app.get('/eestifilmid', (req, res)=>{
 });
 
 //sisseloginud kasutajate avaleht
-app.get('/home', (req, res)=>{
+app.get('/home', checkLogin.isLogin, (req, res)=>{
 	res.render('home');
 });
 

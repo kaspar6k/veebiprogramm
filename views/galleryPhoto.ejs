@@ -3,6 +3,8 @@
 <head>
 	<meta charset="utf-8">
 	<title>Fotogalerii</title>
+	<link rel="stylesheet" href="/style/gallery.css">
+	<script src="/script/gallery.js"></script>
 </head>
 <body>
 	<h1>Fotogalerii</h1>
@@ -12,13 +14,25 @@
 		<li><a href="/galleryPhotoUpload">Piltide üleslaadimine</a></li>
 	</ul>
 	<hr>
+	<dialog id="modal" class="modalarea">
+		<span id= "modalClose" class="modalclose">&times;</span>
+		<div class="modalgorizontal">
+			<div class="modalvertival">
+				<p id="modalCaption"></p>
+				<img id="modalImage" src="../pic/empty.png" alt="galeriipilt">
+			</div>
+		</div>
+	</dialog>
+	
+	<div id="gallery" class="gallery">
 	<% if (photoList.length > 0) { %>
 		<% photoList.forEach(photo => { %>
-			<img src="/gallery/normal/<%= photo.filename %>" alt="<%= photo.alttext || 'Galeriipilt' %>">
+			<img src="/gallery/thumbs/<%= photo.filename %>" alt="<%= photo.alttext || 'Galeriipilt' %>" class="thumbs" data-id="<%=image.id%>" data-filename="<%=image.id%>">
 			</a>
 		<% }); %>
 	<% } else { %>
 		<p>Galeriis pole veel fotosid.</p>
 	<% } %>
+	</div>
 </body>
 </html>

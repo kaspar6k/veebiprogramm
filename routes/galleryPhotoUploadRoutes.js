@@ -1,6 +1,9 @@
 const express = require('express');
 const multer = require('multer');
+const checkLogin = require('../src/checkLogin');
+
 const router = express.Router();
+router.use(checkLogin.isLogin);
 
 //seadistame multer vahevara failide üleslaadimiseks
 const upload = multer({dest: process.env.UPLOAD_ORIGINAL_PATH});
