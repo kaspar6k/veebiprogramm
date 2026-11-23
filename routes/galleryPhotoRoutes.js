@@ -4,9 +4,13 @@ const checkLogin = require('../src/checkLogin');
 const router = express.Router();
 router.use(checkLogin.isLogin);
 
-const {photoGallery, userPhotoGallery} = require('../controllers/galleryPhotoControllers');
+const {photoGalleryHome, userPhotoGallery, photoGallery, photoEdit, photoEditPost} = require('../controllers/galleryPhotoControllers');
 
-router.route('/').get(photoGallery);
+router.route('/').get(photoGalleryHome);
 router.route('/user').get(userPhotoGallery);
+router.route('/edit/:id').get(photoEdit).post(photoEditPost);
+//jätan viimaseks
+router.route('/:page').get(photoGallery);
+
 
 module.exports = router;

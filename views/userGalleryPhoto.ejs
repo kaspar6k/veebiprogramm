@@ -28,8 +28,10 @@
 	<div id="gallery" class="gallery">
 	<% if (photoList.length > 0) { %>
 		<% photoList.forEach(photo => { %>
-		<div>
-			<img src="/gallery/thumbs/<%= photo.src %>" alt="<%= photo.alt %>" class="thumbs" data-id="<%= photo.id %>" data-filename="<%= photo.src %>">
+		<div>		
+			<a href="/galleryPhoto/edit/<%= photo.id %>">
+				<img src="/gallery/thumbs/<%= photo.src %>" alt="<%= photo.alt %>" class="thumbs" data-id="<%= photo.id %>" data-filename="<%= photo.src %>">
+			</a>
 			<p><%= photo.privacy %></p>
 		</div>
 		<% }); %>

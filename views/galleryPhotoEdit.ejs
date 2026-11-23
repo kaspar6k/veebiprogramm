@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="et">
+<img src="/gallery/<%= photo.filename %>" alt="<%= photo.alttext || 'Galeriipilt' %>">
+
+<form method="POST">
+	<label for="altInput">Alt-tekst:</label>
+	<input type="text" id="altInput" name="altInput" value="<%= photo.alttext || '' %>">
+	<br>
+	<label>Privaatsus:</label>
+	<input type="radio" id="priv1" name="privacyInput" value="1" <%= photo.privacy === 1 ? 'checked' : '' %>>
+	<label for="priv1">Privaatne</label>
+	<input type="radio" id="priv2" name="privacyInput" value="2" <%= photo.privacy === 2 ? 'checked' : '' %>>
+	<label for="priv2">Kontoga isik</label>
+	<input type="radio" id="priv3" name="privacyInput" value="3" <%= photo.privacy === 3 ? 'checked' : '' %>>
+	<label for="priv3">Avalik</label>
+	<br>
+	<input type="submit" name="photoUpdate" value="Salvesta muudatused">
+</form>
+
+<form method="POST" onsubmit="return confirm('Kas kustutan foto?');">
+	<input type="submit" name="photoDelete" value="Kustuta foto">
+</form>
+</html>
