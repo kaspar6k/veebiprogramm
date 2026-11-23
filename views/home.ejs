@@ -7,11 +7,13 @@
 <body>
 	<img src="pic/veebiprogrammeerimine_2026_TA.png" alt="">
 	<h1>Kaspar Kuusk, veebiprogrammeerimine</h1>
+	<% if (userName) { %><p>Sisse logitud: <b><%= userName %></p><% } %></b>
 	<ul>
 		<li><a href="/logout">Logi välja</a></li>
 		<br>
 		<li><a href="/galleryPhotoUpload">Galeriipiltide üleslaadimine</a></li>
 		<li><a href="/galleryPhoto">Fotogalerii</a></li>
+		<li><a href="/galleryPhoto/user">Kasutaja laetud pildid</a></li>
 	</ul>
 </body>
 </html>

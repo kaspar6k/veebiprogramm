@@ -4,10 +4,11 @@
 	<meta charset="utf-8">
 	<title>Fotogalerii</title>
 	<link rel="stylesheet" href="/style/gallery.css">
-	<script src="/script/gallery.js"></script>
+	<script src="/script/gallery.js" defer></script>
 </head>
 <body>
 	<h1>Fotogalerii</h1>
+	<% if (userName) { %><p>Sisse logitud: <b><%= userName %></p><% } %></b>
 	<hr>
 	<ul>
 		<li><a href="/">Avalehele</a></li>
@@ -16,8 +17,8 @@
 	<hr>
 	<dialog id="modal" class="modalarea">
 		<span id= "modalClose" class="modalclose">&times;</span>
-		<div class="modalgorizontal">
-			<div class="modalvertival">
+		<div class="modalhorizontal">
+			<div class="modalvertical">
 				<p id="modalCaption"></p>
 				<img id="modalImage" src="../pic/empty.png" alt="galeriipilt">
 			</div>
@@ -27,10 +28,9 @@
 	<div id="gallery" class="gallery">
 	<% if (photoList.length > 0) { %>
 		<% photoList.forEach(photo => { %>
-			<img src="/gallery/thumbs/<%= photo.filename %>" alt="<%= photo.alttext || 'Galeriipilt' %>" class="thumbs" data-id="<%=image.id%>" data-filename="<%=image.id%>">
-			</a>
+			<img src="/gallery/thumbs/<%= photo.src %>" alt="<%= photo.alt %>" class="thumbs" data-id="<%= photo.id %>" data-filename="<%= photo.src %>">
 		<% }); %>
-	<% } else { %>
+	<% } else { %> 
 		<p>Galeriis pole veel fotosid.</p>
 	<% } %>
 	</div>

@@ -43,6 +43,13 @@ app.use(session({
 		maxAge: 1000 * 60 * 60 * 4 //tunniga aeguvad sessioni küpsised
 	}
 }));
+app.use((req, res, next)=>{
+	res.locals.userName = null;
+	if(req.session && req.session.userId){
+		res.locals.userName = req.session.firstName + ' ' + req.session.lastName;
+	}
+	next();
+});
 
 //määrame veebilehtedele mallide renderdamise mootori
 app.set('view engine', 'ejs');
@@ -113,6 +120,7 @@ app.get('/home', checkLogin.isLogin, (req, res)=>{
 
 //väljalogimine
 app.get('/logout', (req, res)=>{
+	req.session.destroy();
 	res.redirect('/');
 });
 

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+	<meta charset="utf-8">
+	<title>Minu pildid</title>
+	<link rel="stylesheet" href="/style/gallery.css">
+	<script src="/script/gallery.js" defer></script>
+</head>
+<body>
+	<h1>Kasutaja fotogalerii</h1>
+	<% if (userName) { %><p>Sisse logitud: <b><%= userName %></p><% } %></b>
+	<hr>
+	<ul>
+		<li><a href="/">Avalehele</a></li>
+		<li><a href="/galleryPhotoUpload">Piltide üleslaadimine</a></li>
+	</ul>
+	<hr>
+	<dialog id="modal" class="modalarea">
+		<span id= "modalClose" class="modalclose">&times;</span>
+		<div class="modalhorizontal">
+			<div class="modalvertical">
+				<p id="modalCaption"></p>
+				<img id="modalImage" src="../pic/empty.png" alt="galeriipilt">
+			</div>
+		</div>
+	</dialog>
+	
+	<div id="gallery" class="gallery">
+	<% if (photoList.length > 0) { %>
+		<% photoList.forEach(photo => { %>
+		<div>
+			<img src="/gallery/thumbs/<%= photo.src %>" alt="<%= photo.alt %>" class="thumbs" data-id="<%= photo.id %>" data-filename="<%= photo.src %>">
+			<p><%= photo.privacy %></p>
+		</div>
+		<% }); %>
+	<% } else { %> 
+		<p>Galeriis pole veel fotosid.</p>
+	<% } %>
+	</div>
+</body>
+</html>

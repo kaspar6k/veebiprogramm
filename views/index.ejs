@@ -7,8 +7,9 @@
 </head>
 <body>
 	<h1>Kaspar Kuusk, veebiprogrammeerimine</h1>
+	<hr>
 	 <p>See leht on loodud veebiprogrammeerimise kursusel <a href="https://www.tlu.ee">Tallinna Ülikoolis</a> ning ei sislda tõµsiseltvõetavat sisu!</p>
-	<p>Esialgu tutvusime lihtsalt HTML keelega, peatselt programmeerime.</p>
+	<% if (userName) { %><p>Sisse logitud: <b><%= userName %></p><% } %></b>
 	<hr>
 	<p>Täna on <%= dayNow %></p>
 	<p><%= dateNow %></p>
@@ -22,6 +23,8 @@
 		<li><a href="/eestifilmid">Eesti filmid</a></li>
 		<li><a href="/galleryPhotoUpload">Piltide üleslaadimine</a></li>
 		<li><a href="/galleryPhoto">Fotogalerii</a></li>
+		<li><a href="/galleryPhoto/user">Sisselogitud kasutaja fotogalerii</a></li>
+		<li><a href="/home">/home</a></li>
 	</ul>
 	<% if (photo.filename) { %>
 		<h2>Uusim avalik foto</h2>
