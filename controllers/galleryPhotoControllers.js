@@ -62,7 +62,7 @@ const userPhotoGallery = async (req, res)=>{
 	}
 	catch(err){
 		console.log('viga galerii lugemisel: ' + err);
-		res.render('galleryPhoto', {photoList: []});
+		res.render('userGalleryPhoto', {photoList: []});
 	}
 	finally {
 		if(conn){
